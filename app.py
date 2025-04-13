@@ -5,36 +5,28 @@ from streamlit_chat import message
 import os
 
 # Set page config first
-st.set_page_config(page_title="🌾 AI Crop Yield Chatbot", page_icon="🌾", layout="wide")
+st.set_page_config(page_title="\U0001F33E AI Crop Yield Chatbot", page_icon="\U0001F33E", layout="wide")
 
 # Apply custom CSS for layout
 st.markdown("""
     <style>
-        body {
-            background-color: #f5f5f5;
-        }
         .title-section {
-            background-color: #4CAF50;  # Keeping the same green for the title section
+            background-color: #4CAF50;
             color: white;
             padding: 40px 10px 10px;
             text-align: center;
         }
         .main-section {
-            background-color: #ffffff;  # Light white background for main section
+            background-color: #fdfdfd;
             padding: 20px;
-            border-radius: 10px;  # Rounded corners for better appearance
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  # Subtle shadow for depth
         }
-        .contact-section {
-            background-color: #232F3E;  # Dark blue for the contact section
+        .footer-section {
+            background-color: #1c1c1c;
             color: white;
-            padding: 30px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  # Adding depth with shadow
+            padding: 15px 20px;
         }
         .footer-link {
-            color: #ddd;
-            margin-right: 15px;
+            color: #ccc;
             text-decoration: none;
         }
         .footer-link:hover {
@@ -44,12 +36,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ---------- TITLE SECTION ----------
-st.markdown('<div class="title-section"><h1>🌾 AI Crop Yield Chatbot</h1><p>Empowering Indian Farmers With Smart Predictions</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="title-section"><h1>\U0001F33E AI Crop Yield Chatbot</h1><p>Empowering Indian Farmers With Smart Predictions</p></div>', unsafe_allow_html=True)
 
 # ---------- MAIN SECTION ----------
 st.markdown('<div class="main-section">', unsafe_allow_html=True)
 
-st.subheader("📍 Select Region & Season")
+st.subheader("\U0001F4CD Select Region & Season")
 state = st.selectbox("Select your state:", list(state_season_crop_map.keys()))
 season = st.selectbox("Select the season:", ["Kharif", "Rabi", "Zaid", "Cash Crops"])
 
@@ -60,46 +52,51 @@ if state in state_season_crop_map and season in state_season_crop_map[state]:
     else:
         st.warning("No crops listed for this state and season.")
 
-st.subheader("🔍 Predict Crop Yield")
+st.subheader("\U0001F50D Predict Crop Yield")
 
 crop = st.selectbox("Select your crop:", list(crop_details.keys()))
-temperature = st.slider("🌡️ Average temperature (°C):", 10, 45, 25)
-rainfall = st.slider("🌧️ Expected rainfall (mm):", 0, 300, 100)
+temperature = st.slider("\U0001F321️ Average temperature (°C):", 10, 45, 25)
+rainfall = st.slider("\U0001F327️ Expected rainfall (mm):", 0, 300, 100)
 
 # Show crop image
-image_path = f"crop_images/{crop.lower()}.jpg"
-if os.path.exists(image_path):
-    st.image(image_path, caption=f"{crop}", width=300)
-else:
+image_extensions = ["jpg", "jpeg", "png"]
+image_found = False
+for ext in image_extensions:
+    image_path = f"crop_images/{crop.lower()}.{ext}"
+    if os.path.exists(image_path):
+        st.image(image_path, caption=f"{crop}", width=300)
+        image_found = True
+        break
+if not image_found:
     st.info("Image not available for this crop.")
 
 if crop in crop_details:
-    st.markdown(f"**🗓️ Season of {crop}:** {crop_details[crop]['season']}")
-    st.markdown(f"**📍 Commonly grown in:** {crop_details[crop]['states']}")
+    st.markdown(f"**\U0001F4C5 Season of {crop}:** {crop_details[crop]['season']}")
+    st.markdown(f"**\U0001F4CD Commonly grown in:** {crop_details[crop]['states']}")
 
-if st.button("📊 Predict Yield"):
+if st.button("\U0001F4CA Predict Yield"):
     result = predict_yield(crop, temperature, rainfall)
 
     if crop in crop_yield_ranges:
         ranges = crop_yield_ranges[crop]
         if result >= ranges["good"]:
-            level = "🟢 Good Yield"
+            level = "\U0001F7E2 Good Yield"
         elif result >= ranges["average"]:
-            level = "🟡 Average Yield"
+            level = "\U0001F7E1 Average Yield"
         else:
-            level = "🔴 Poor Yield"
-        st.success(f"✅ Estimated Yield for {crop}: **{result} tons/acre**")
-        st.info(f"🌾 Yield Level: **{level}**")
+            level = "\U0001F534 Poor Yield"
+        st.success(f"\u2705 Estimated Yield for {crop}: **{result} tons/acre**")
+        st.info(f"\U0001F33E Yield Level: **{level}**")
     else:
-        st.success(f"✅ Estimated Yield for {crop}: **{result} tons/acre**")
-        st.warning("⚠️ Yield category not available for this crop.")
+        st.success(f"\u2705 Estimated Yield for {crop}: **{result} tons/acre**")
+        st.warning("\u26A0\uFE0F Yield category not available for this crop.")
 
 # --- Chatbot Section ---
-st.markdown("### 💬 Ask Anything About Agriculture")
+st.markdown("### \U0001F4AC Ask Anything About Agriculture")
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-user_input = st.text_input("🧑 You:", placeholder="Ask me about crops, seasons, soil, etc...")
+user_input = st.text_input("\U0001F9D1 You:", placeholder="Ask me about crops, seasons, soil, etc...")
 
 if user_input:
     def get_bot_response(user_msg):
@@ -125,24 +122,28 @@ for msg in st.session_state.chat_history:
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ---------- Footer with Team Info ----------
+# ---------- FOOTER SECTION ----------
+st.markdown('<div class="footer-section">', unsafe_allow_html=True)
+
+col1, col2 = st.columns([1, 2])
+with col1:
+    st.markdown("#### ℹ️ About Us", unsafe_allow_html=True)
+    st.markdown("<small>We are a student team aiming to help farmers using AI for crop yield prediction.</small>", unsafe_allow_html=True)
+    st.markdown("#### 📧 Help", unsafe_allow_html=True)
+    st.markdown("<small>Email: support@cropai.in</small>", unsafe_allow_html=True)
+
+with col2:
+    st.markdown("#### 📜 Policies", unsafe_allow_html=True)
+    st.markdown('<small><a class="footer-link" href="#">Privacy Policy</a> | <a class="footer-link" href="#">Terms</a> | <a class="footer-link" href="#">Support</a></small>', unsafe_allow_html=True)
+
+st.markdown('<hr style="border-color:#666;">', unsafe_allow_html=True)
 st.markdown("""
-    <div style="text-align: center; padding: 20px; background-color: #2c3e50; color: white; border-radius: 10px;">
-        <h4>Team Information:</h4>
-        <p><strong>Group Leader:</strong> Dhruv Gupta</p>
-        <p><strong>Members:</strong> Niraj Patel, Ritesh Dalal, Atharva Ghodke, Aditya Ankashkar</p>
-        <p><strong>College:</strong> GV Acharya Institute of Engineering and Technology (GVAIET)</p>
-        <p><strong>Project Title:</strong> Sustainable Agriculture with AI for Crop Yield Prediction</p>
-        <p><strong>Contact:</strong> 📞 9309826762 | 📧 pniraj310@gmail.com</p>
-        <p><strong>Under the guidance of:</strong> Suraj Chopde (Edunet Trainer)</p>
-        <hr style="border-color:#444;">
-        <h5>About Us</h5>
-        <p>We are a student team aiming to help farmers using AI for crop yield prediction.</p>
-        <h5>Help</h5>
-        <p>Email us at: <a href="mailto:support@cropai.in" style="color: #ddd;">support@cropai.in</a></p>
-        <h5>Policies</h5>
-        <p><a href="#" class="footer-link" style="color: #ddd;">Privacy Policy</a></p>
-        <p><a href="#" class="footer-link" style="color: #ddd;">Terms of Use</a></p>
-        <p><a href="#" class="footer-link" style="color: #ddd;">Support</a></p>
+    <div style="text-align: center; font-size: 12px; color: #ccc;">
+        <p>© 2025 AI Crop Yield Bot | Made with ❤️ by Dhruv Gupta  and Team</p>
+        <p>Group Leader: Dhruv Gupta | Members: Niraj, Ritesh, Atharva, Aditya</p>
+        <p>G. V. Acharya Institute Of Engineering And Technology Shelu
+        <p> | Guided by: Suraj Chopde (Edunet) </p>
     </div>
 """, unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
