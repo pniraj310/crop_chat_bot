@@ -130,7 +130,9 @@ with col1:
     st.markdown("#### ℹ️ About Us", unsafe_allow_html=True)
     st.markdown("<small>We are a student team aiming to help farmers using AI for crop yield prediction.</small>", unsafe_allow_html=True)
     st.markdown("#### 📧 Help", unsafe_allow_html=True)
-    st.markdown("<small>Email: support@cropai.in</small>", unsafe_allow_html=True)
+    st.markdown("<small>Email: pniraj310@gmail.com</small>", unsafe_allow_html=True)
+    st.markdown("#### 📞 WhatsApp", unsafe_allow_html=True)
+    st.markdown("<small>WhatsApp: 9309826762</small>", unsafe_allow_html=True)
 
 with col2:
     st.markdown("#### 📜 Policies", unsafe_allow_html=True)
@@ -139,9 +141,9 @@ with col2:
 st.markdown('<hr style="border-color:#666;">', unsafe_allow_html=True)
 st.markdown("""
     <div style="text-align: center; font-size: 12px; color: #ccc;">
-        <p>© 2025 AI Crop Yield Bot | Made with ❤️ by Dhruv Gupta  and Team</p>
+        <p>© 2025 AI Crop Yield Bot | Made with ❤️ by Dhruv Gupta and Team</p>
         <p>Group Leader: Dhruv Gupta | Members: Niraj, Ritesh, Atharva, Aditya</p>
-        <p>G. V. Acharya Institute Of Engineering And Technology Shelu
+        <p>G. V. Acharya Institute Of Engineering And Technology Shelu</p>
         <p> | Guided by: Suraj Chopde (Edunet) </p>
     </div>
 """, unsafe_allow_html=True)
